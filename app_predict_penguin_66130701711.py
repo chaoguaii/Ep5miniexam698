@@ -23,6 +23,7 @@ flipper_length = st.number_input("Flipper Length (mm)", min_value=0.0, step=0.1)
 body_mass = st.number_input("Body Mass (g)", min_value=0.0, step=1.0)
 sex = st.selectbox("Sex", ["MALE", "FEMALE"])
 
+
 # Create a dataframe for prediction
 if st.button("Predict"):
     input_data = pd.DataFrame({
@@ -33,6 +34,8 @@ if st.button("Predict"):
         'body_mass_g': [body_mass],
         'sex': [sex]
     })
+    input_data['island'] = island_encoder.transform(input_data['island'])
+    input_data['sex'] = sex_encoder.transform(input_data['sex'])
 
     # Make a prediction
     prediction = model.predict(input_data)
