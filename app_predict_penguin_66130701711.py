@@ -1,10 +1,9 @@
-
 import pandas as pd
 import streamlit as st
 import pickle
 
 # Load the trained model
-model_path = 'model_penguin_66130701711.pkl'  # Ensure this file is in the same directory
+model_path = 'model_penguin_66130701711.pkl'
 with open(model_path, 'rb') as f:
     model = pickle.load(f)
 
@@ -34,11 +33,11 @@ if st.button("Predict"):
         'sex': [sex]
     })
 
-    # Make a prediction
-    prediction = model.predict(input_data)
+    try:
+        # Ensure input data matches the training format
+        prediction = model.predict(input_data)
 
-    # Display the result
-    st.subheader(f"Predicted Species: {prediction[0]}")
-
-
-
+        # Display the result
+        st.subheader(f"Predicted Species: {prediction[0]}")
+    except Exception as e:
+        st.error(f"An error occurred during prediction: {e}")
